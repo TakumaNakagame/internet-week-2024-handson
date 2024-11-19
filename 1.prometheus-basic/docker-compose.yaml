@@ -1,0 +1,32 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus:/etc/prometheus
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    ports:
+      - '9093:9093'
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - '8025:8025'
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    hostname: prometheus-book
+    ports:
+      - '9100:9100'
+  grafana:
+    image: grafana/grafana:10.4.12
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana:/var/lib/grafana
+
+volumes:
+  grafana:
